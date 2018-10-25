@@ -1,6 +1,6 @@
 const RabbitService = {}
 RabbitService.setupRabbit = require('./services/rabbitService/setup-rabbit').setupRabbit
-RabbitService.publishInvoices = require('./services/rabbitService/publish-invoices').publishMessages
+RabbitService.publishMessages = require('./services/rabbitService/publish-messages').publishMessages
 
 const BlockchainService = {}
 BlockchainService.querySmartContract = require('./services/blockchain-service/query-smart-contract').querySmartContract
@@ -21,11 +21,7 @@ const POLL_INTERVAL = 2500;
 var authenticated = false;
 let pollTicCount = 1;
 
-let appEnv = cfenv.getAppEnv();
-
-const sMessagingserviceUri = appEnv.isLocal ?
-   process.env.RABBIT_MQ_LOCAL :
-   appEnv.services.rabbitmq[0].credentials.uri;
+const sMessagingserviceUri = process.env.RABBIT_MQ_LOCAL 
 
 let channel;
 
@@ -39,14 +35,16 @@ const poller = async () => {
       }
 
       let uuid = createUuid.uuidv4();
+      let messages;
 
       BlockchainService.querySmartContract(credentials.smartContractURL, pollTicCount)
-         .then((invoices) => {
-            if (!invoices)
+         .then((response) => {
+            messages = JSON.parse(response).messages;
+            if (!messages)
                log.logMessage("info", "No data returned from mock-blockchain-query", { "X-correlation-id": uuid });
             else {
-               if (invoices.length > 0) {
-                  RabbitService.publishMessages(invoices, channel, uuid)
+               if (messages.length > 0) {
+                  RabbitService.publishMessages(messages, channel, uuid)
                }
             }
          }).catch(function (err) {

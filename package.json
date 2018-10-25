@@ -1,0 +1,30 @@
+{
+  "name": "ingest-service",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "cf-nodejs-logging-support": "^3.0.12",
+    "cfenv": "^1.1.0",
+    "dotenv": "^6.0.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
+  },
+  "main": "app.js",
+  "scripts": {
+    "test": "",
+    "dev:build": "docker build -t sean-github/ingest-service .",
+    "start": "node app.js",
+    "start:dev:ssh": "docker run -it sean-github/ingest-service /bin/bash",
+    "start:dev": "npm run dev:build | docker run -d sean-github/ingest-service"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Sean King",
+  "license": "MIT",
+  "engines": {
+    "node": ">=7.6.0"
+  }
+}
