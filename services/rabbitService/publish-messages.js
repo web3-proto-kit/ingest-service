@@ -11,12 +11,12 @@ async function publishMessages(results, channel, uuid) {
             try {
                 channel.publish('NewMessageExchange', '', Buffer.from(JSON.stringify(message)));
 
-                log.logMessage("info", "Publishing to NewMessageExchange for " + message.Key, { "X-correlation-id": uuid , "message_id": message.Key });
+                log.logMessage("info", "Publishing to NewMessageExchange for " + message.Key, { "X-correlation-id": uuid, "message_id": message.Key });
 
                 return { "message": message, "confirmation": "published" }
             }
             catch (err) {
-                log.logMessage("error", "Error publishing to NewMessageExchange", { "X-correlation-id": uuid , "message_id": message.Key });
+                log.logMessage("error", "Error publishing to NewMessageExchange", { "X-correlation-id": uuid, "message_id": message.Key });
                 return { "message": message, "confirmation": "error" }
             }
         });
