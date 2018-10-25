@@ -1,6 +1,6 @@
 const RabbitService = {}
 RabbitService.setupRabbit = require('./services/rabbitService/setup-rabbit').setupRabbit
-RabbitService.publishInvoices = require('./services/rabbitService/publish-invoices').publishInvoices
+RabbitService.publishInvoices = require('./services/rabbitService/publish-invoices').publishMessages
 
 const FabricService = {}
 FabricService.querySmartContract = require('./services/fabricService/query-smart-contract').querySmartContract
