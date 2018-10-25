@@ -46,7 +46,7 @@ const poller = async () => {
           log.logMessage("info", "No data returned from mock-blockchain-query", { "X-correlation-id": uuid });
         else {
           if (invoices.length > 0) {
-            RabbitService.publishInvoices(invoices, channel, uuid)  
+            RabbitService.publishMessages(invoices, channel, uuid)  
           }
         }
       }).catch(function (err) {
