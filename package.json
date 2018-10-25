@@ -15,8 +15,8 @@
     "test": "",
     "dev:build": "docker build -t sean-github/ingest-service .",
     "start": "node app.js",
-    "start:dev:ssh": "docker run -it sean-github/ingest-service /bin/bash",
-    "start:dev": "npm run dev:build | docker run -d sean-github/ingest-service"
+    "start:dev:ssh": "npm run dev:build && docker run -it sean-github/ingest-service /bin/bash",
+    "start:dev": "npm run dev:build && docker run -d sean-github/ingest-service"
   },
   "repository": {
     "type": "git",

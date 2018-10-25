@@ -14,6 +14,7 @@ const credentials = {
    "smartContractURL": process.env.SMART_CONTRACT_URL
 };
 
+
 log.setLoggingLevel("info");
 
 // 2.5 Second interval
@@ -31,8 +32,10 @@ log.logMessage("info", "Project Configuration Succesful");
 const poller = async () => {
    try {
       if (!channel) {
+
          channel = await RabbitService.setupRabbit(sMessagingserviceUri);
       }
+      console.log(channel);
 
       let uuid = createUuid.uuidv4();
       let messages;
