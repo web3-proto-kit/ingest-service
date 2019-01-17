@@ -6,9 +6,9 @@
     "amqplib": "^0.5.2",
     "cf-nodejs-logging-support": "^3.0.12",
     "cfenv": "^1.1.0",
-    "dotenv": "^6.0.0",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "request-promise-native": "^1.0.5",
+    "uuid": "^3.3.2"
   },
   "main": "app.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "dev:build": "docker build -t sean-github/ingest-service .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "start": "node app.js",
+    "start": "babel-node app.js",
     "start:dev:ssh": "npm run dev:build && docker run -it sean-github/ingest-service /bin/bash",
     "start:dev": "npm run dev:build && docker run -d sean-github/ingest-service"
   },
@@ -30,6 +30,13 @@
     "node": ">=7.6.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.2.3",
+    "babel-plugin-inline-dotenv": "^1.2.0",
+    "dotenv": "^6.2.0",
     "eslint": "^5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0"

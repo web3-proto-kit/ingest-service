@@ -6,7 +6,7 @@
     },
     "rules": {
         "no-plusplus": [
-            1,
+            2,
             {
                 "allowForLoopAfterthoughts": true
             }
@@ -17,6 +17,7 @@
                 "functions": false,
                 "variables": false
             }
-        ]
+        ],
+        "no-param-reassign": 0
     }
 }
