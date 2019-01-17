@@ -14,6 +14,8 @@
   "scripts": {
     "test": "",
     "dev:build": "docker build -t sean-github/ingest-service .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "start": "node app.js",
     "start:dev:ssh": "npm run dev:build && docker run -it sean-github/ingest-service /bin/bash",
     "start:dev": "npm run dev:build && docker run -d sean-github/ingest-service"
@@ -26,5 +28,10 @@
   "license": "MIT",
   "engines": {
     "node": ">=7.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
   }
 }
