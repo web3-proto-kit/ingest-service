@@ -1,17 +1,13 @@
-const RabbitService = {};
-RabbitService.setupRabbit = require('./services/rabbitService/setup-rabbit').setupRabbit;
-RabbitService.publishMessages = require('./services/rabbitService/publish-messages').publishMessages;
+import log from 'cf-nodejs-logging-support';
+import uuidv4 from 'uuid/v4';
+import setupRabbit from './services/rabbitService/setup-rabbit';
+import publishMessages from './services/rabbitService/publish-messages';
+import querySmartContract from './services/blockchain-service/query-smart-contract';
 
-const BlockchainService = {};
-BlockchainService.querySmartContract = require('./services/blockchain-service/query-smart-contract').querySmartContract;
-
-const log = require('cf-nodejs-logging-support');
-const uuidv4 = require('uuid/v4');
 
 const credentials = {
   smartContractURL: process.env.SMART_CONTRACT_URL,
 };
-
 
 log.setLoggingLevel('info');
 
@@ -29,18 +25,18 @@ log.logMessage('info', 'Project Configuration Succesful');
 const poller = async () => {
   try {
     if (!channel) {
-      channel = await RabbitService.setupRabbit(sMessagingserviceUri);
+      channel = await setupRabbit(sMessagingserviceUri);
     }
     console.log(channel);
 
     const uuid = uuidv4();
 
-    BlockchainService.querySmartContract(credentials.smartContractURL, pollTicCount)
+    querySmartContract(credentials.smartContractURL, pollTicCount)
       .then((response) => {
         const { messages } = JSON.parse(response);
         if (!messages) log.logMessage('info', 'No data returned from mock-blockchain-query', { 'X-correlation-id': uuid });
         else if (messages.length > 0) {
-          RabbitService.publishMessages(messages, channel, uuid);
+          publishMessages(messages, channel, uuid);
         }
       }).catch((err) => {
         console.log(err);

@@ -1,8 +1,8 @@
-const request = require('request-promise-native');
+import request from 'request-promise-native';
 
-function querySmartContract(smartContractURL, pollTicCount) {
+const querySmartContract = (smartContractURL, pollTicCount) => {
   console.log(pollTicCount);
   return request(smartContractURL);
-}
+};
 
-module.exports = { querySmartContract };
+export default querySmartContract;
