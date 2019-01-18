@@ -24,7 +24,8 @@
     "lint:fix": "eslint --fix .",
     "start": "forever -c 'nodemon --exitcrash --exec babel-node' src/app.js",
     "start:docker:ssh": "npm run build:docker && docker run -it sean-github/ingest-service /bin/bash",
-    "start:docker": "npm run dev:build && docker run -d sean-github/ingest-service"
+    "start:docker": "npm run dev:build && docker run -d sean-github/ingest-service",
+    "serve": "node lib/src/app.js"
   },
   "repository": {
     "type": "git",

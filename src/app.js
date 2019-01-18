@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import log from 'cf-nodejs-logging-support';
 import uuidv4 from 'uuid/v4';
 import setupRabbit from './services/rabbitService/setup-rabbit';
