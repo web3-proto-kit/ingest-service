@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "amqplib": "^0.5.2",
     "cf-nodejs-logging-support": "^3.0.12",
     "cfenv": "^1.1.0",
@@ -12,13 +13,18 @@
   },
   "main": "app.js",
   "scripts": {
-    "test": "",
-    "dev:build": "docker build -t sean-github/ingest-service .",
+    "build": "npm-run-all clean build:src build:tests",
+    "build:src": "babel src -d lib/src --copy-files",
+    "build:tests": "babel tests -d lib/tests",
+    "build:docker": "docker build -t sean-github/ingest-service .",
+    "clean": "npm-run-all clean:src clean:tests",
+    "clean:src": "rimraf lib/src",
+    "clean:tests": "rimraf lib/tests",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "start": "babel-node app.js",
-    "start:dev:ssh": "npm run dev:build && docker run -it sean-github/ingest-service /bin/bash",
-    "start:dev": "npm run dev:build && docker run -d sean-github/ingest-service"
+    "start": "forever -c 'nodemon --exitcrash --exec babel-node' src/app.js",
+    "start:docker:ssh": "npm run build:docker && docker run -it sean-github/ingest-service /bin/bash",
+    "start:docker": "npm run dev:build && docker run -d sean-github/ingest-service"
   },
   "repository": {
     "type": "git",
@@ -33,12 +39,17 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
-    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.2.3",
     "babel-plugin-inline-dotenv": "^1.2.0",
+    "chai": "^4.2.0",
     "dotenv": "^6.2.0",
     "eslint": "^5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint-plugin-import": "^2.14.0",
+    "forever": "^0.15.3",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^2.6.3"
   }
 }
