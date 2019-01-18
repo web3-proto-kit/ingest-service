@@ -1,0 +1,23 @@
+{
+    "extends": "airbnb-base",
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "rules": {
+        "no-plusplus": [
+            2,
+            {
+                "allowForLoopAfterthoughts": true
+            }
+        ],
+        "no-use-before-define": [
+            2,
+            {
+                "functions": false,
+                "variables": false
+            }
+        ],
+        "no-param-reassign": 0
+    }
+}
